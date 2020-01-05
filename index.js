@@ -1,6 +1,7 @@
 // importera och initiera express
 const express = require('express');
 const app = express();
+const cors = require('cors');
 // importerar paketet mongoose som hanterar MongoDB
 const mongoose = require('mongoose');
 
@@ -26,6 +27,7 @@ const Snus = require('./models/Snus');
 // Middlewares
 app.use(express.urlencoded({extended: false}))
 app.use(express.json());
+app.use(cors());
 
 
 // Route middlewares
@@ -37,7 +39,7 @@ app.use('/api/admin', adminRoute);
 // Get all snus's
 app.get('/api/snus', (req, res) => {
     // Get all snus from database, but only specified fields
-    Snus.find({}, {brand: 1, product: 1, snusType: 1, nicotineAmount: 1, amountPerBox: 1, producer: 1, misc: 1, _id: 0,}, (err, snus) => {
+    Snus.find({}, {brand: 1, product: 1, snusType: 1, nicotineAmount: 1, amountPerBox: 1, producer: 1, misc: 1, _id: 1,}, (err, snus) => {
         if (err) return res.status(500).send(err);
         if (snus.length == 0) return res.send({message: "Inga snus tillagda ännu"});
         return res.send({snus});
@@ -52,4 +54,4 @@ app.get('/api/snus/:id', (req, res) => {
 })
 
 
-app.listen(3000, () => console.log('Server is up and running on port 3000'));
+app.listen(3001, () => console.log('Server is up and running on port 3001'));

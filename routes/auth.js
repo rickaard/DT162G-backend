@@ -14,15 +14,15 @@ router.post('/login', async (req, res) => {
 
     // CHECK IF USERNAME EXISTS IN DATABASE
     const user = await Admin.findOne({ username: req.body.username });
-    if (!user) return res.status(400).send('Username or password incorrect');
+    if (!user) return res.status(400).send({status: 'error', message: 'Username or password incorrect'});
 
     // CHECK IF PASSWORD IS CORRECT
     const validPassword = await bcrypt.compare(req.body.password, user.password);
-    if (!validPassword) return res.status(404).send('Username or password incorrect'); 
+    if (!validPassword) return res.status(404).send({status: 'error', message: 'Username or password incorrect'}); 
 
     // CREATE AND ASSIGN A TOKEN
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-    res.header('auth-token', token).status(200).send(token);
+    res.header('auth-token', token).status(200).send({message: 'Inloggad', status: 'ok', token: token});
 });
 
 module.exports = router;
