@@ -3,9 +3,9 @@ const verify = require('./verifyToken');
 
 const Snus = require('../models/Snus');
 
-router.get('/', verify, (req, res) => {
+router.get('/:status', verify, (req, res) => {
     // Hämta alla snus från DB
-    Snus.find((err, snus) => {
+    Snus.find({status: req.params.status}, (err, snus) => {
         if (err) return res.status(500).send(err);
         if (snus.length == 0) return res.send({message: "Inga snus tillagda ännu"});
         return res.send({snus});

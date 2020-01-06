@@ -39,7 +39,12 @@ app.use('/api/admin', adminRoute);
 // Get all snus's
 app.get('/api/snus', (req, res) => {
     // Get all snus from database, but only specified fields
-    Snus.find({}, {brand: 1, product: 1, snusType: 1, nicotineAmount: 1, amountPerBox: 1, producer: 1, misc: 1, _id: 1,}, (err, snus) => {
+    // Sort by brand alphabeticly
+    Snus.find(
+        {}, 
+        {brand: 1, product: 1, snusType: 1, nicotineAmount: 1, amountPerBox: 1, producer: 1, misc: 1, _id: 1,},
+        {sort: {brand: 1}}, 
+        (err, snus) => {
         if (err) return res.status(500).send(err);
         if (snus.length == 0) return res.send({message: "Inga snus tillagda ännu"});
         return res.send({snus});
