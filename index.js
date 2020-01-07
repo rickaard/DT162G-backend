@@ -17,7 +17,7 @@ const postRoute = require('./routes/posts');
 
 // Connect to MongoDB
 mongoose.connect(
-    process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true }, () => {
+    process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }, () => {
         console.log('Connected to DB');
     }
 );
@@ -41,7 +41,7 @@ app.get('/api/snus', (req, res) => {
     // Get all snus from database, but only specified fields
     // Sort by brand alphabeticly
     Snus.find(
-        {}, 
+        {status: 2}, 
         {brand: 1, product: 1, snusType: 1, nicotineAmount: 1, amountPerBox: 1, producer: 1, misc: 1, _id: 1,},
         {sort: {brand: 1}}, 
         (err, snus) => {
