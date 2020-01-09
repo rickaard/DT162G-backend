@@ -37,7 +37,7 @@ app.use('/api/admin', adminRoute);
 
 // Route
 // Get all snus's
-app.get('/api/snus', (req, res) => {
+app.get('/api/snus/', (req, res) => {
     // Get all snus from database, but only specified fields
     // Sort by brand alphabeticly
     Snus.find(
