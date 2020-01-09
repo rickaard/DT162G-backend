@@ -6,8 +6,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 // importerar och inierar paketet dotenv som hanterar miljövariablar
-const dotenv = require('dotenv');
-dotenv.config();
+// const dotenv = require('dotenv');
+// dotenv.config();
 
 // Import routes
 const authRoute = require('./routes/auth');
@@ -37,7 +37,7 @@ app.use('/api/admin', adminRoute);
 
 // Route
 // Get all snus's
-app.get('/api/snus', (req, res) => {
+app.get('/snusdb/api/snus', (req, res) => {
     // Get all snus from database, but only specified fields
     // Sort by brand alphabeticly
     Snus.find(
