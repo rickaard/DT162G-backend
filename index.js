@@ -56,6 +56,16 @@ app.get('/api/snus/:id', (req, res) => {
         if (err) return res.status(500).send(err);
         return res.status(200).json(snus);
     })
+});
+app.get('/api/search/:keyword', (req, res) => {
+    const keywordToUseInRegex = req.params.keyword;
+    
+    // Sök i databasen efter keyword
+    // Sätt options till 'i' för att göra det case in-sensetive
+    Snus.find({brand: {$regex: keywordToUseInRegex, $options: 'i'}, status: 2}, (err, snus) => {
+        if (err) return res.status(500).send(err);
+        return res.status(200).json(snus);
+    })
 })
 
 
